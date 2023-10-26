@@ -1,0 +1,232 @@
+@mixin headerFonts {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  background-color: #ebeef3;
+}
+
+.likebox {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+  + label {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+    &::before {
+      content: '';
+      display: inline-block;
+    }
+  }
+}
+.wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.header {
+  width: 100%;
+  height: 80px;
+  padding: 16px 22px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: rgba(0, 0, 0, 0.85);
+
+  &__logo {
+    @include headerFonts;
+  }
+  &__profile {
+    height: 100%;
+    display: flex;
+    column-gap: 26px;
+  }
+  &__btn {
+    height: 100%;
+    @include headerFonts;
+    &--green {
+      border: 1px solid #52c41a;
+      color: #52c41a;
+    }
+  }
+}
+.content {
+  height: 100%;
+  width: 100%;
+  background-color: #ebeef3;
+}
+.posts {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 26px;
+  padding: 26px 0 17px 0;
+}
+.card {
+  width: 100%;
+  height: 100%;
+  padding: 15px 14px 24px 19px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+  &__author {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 12px;
+
+    &-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    &-avatar {
+      width: 46px;
+      height: 46px;
+    }
+    &-name {
+      display: flex;
+      justify-content: flex-end;
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 28px;
+      height: max-content;
+      width: 100%;
+    }
+    &-date {
+      font-family: 'Inter', sans-serif;
+      color: rgba(0, 0, 0, 0.5);
+
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 22px;
+      display: inline;
+      height: max-content;
+    }
+  }
+  &__info {
+    width: 100%;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    overflow: hidden;
+  }
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    flex-wrap: nowrap;
+  }
+  &__title {
+    font-family: 'Inter', sans-serif;
+    height: 28px;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    color: #1890ff;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  &__tags {
+    display: flex;
+    height: 20px;
+    gap: 8px;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    width: 100%;
+  }
+  &__descr {
+    color: #000;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    overflow: hidden;
+    height: 100%;
+  }
+  &__body {
+    width: 100%;
+    padding: 25px 0;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    color: rgba(0, 0, 0, 0.75);
+    strong {
+      color: rgba(0, 0, 0, 0.75);
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 28px;
+    }
+  }
+}
+.like {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  color: black;
+  &__img {
+    font-size: 18px;
+  }
+}
+.tag {
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  padding: 2px 5px;
+  color: rgba(0, 0, 0, 0.5);
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  &__some {
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    padding: 2px 5px;
+    color: rgba(0, 0, 0, 0.5);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+}
+.post {
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 64px;
+  padding-top: 26px;
+  display: flex;
+  justify-content: center;
+}

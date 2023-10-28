@@ -1,5 +1,4 @@
 @mixin headerFonts {
-  font-family: 'Inter', sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -51,6 +50,7 @@ body {
     height: 100%;
     display: flex;
     column-gap: 26px;
+    align-items: center;
   }
   &__btn {
     height: 100%;
@@ -59,6 +59,29 @@ body {
       border: 1px solid #52c41a;
       color: #52c41a;
     }
+    &--black {
+      border: 1px solid rgba(0, 0, 0, 0.75);
+      color: rgba(0, 0, 0, 0.75);
+    }
+    &--sm {
+      height: min-content;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 22px;
+    }
+  }
+  &__username {
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
+    color: rgba(0, 0, 0, 0.85);
+  }
+  &__user {
+    display: flex;
+    gap: 13px;
+    align-items: center;
   }
 }
 .content {
@@ -105,7 +128,6 @@ body {
     &-name {
       display: flex;
       justify-content: flex-end;
-      font-family: 'Inter', sans-serif;
       font-size: 18px;
       font-style: normal;
       font-weight: 400;
@@ -114,7 +136,6 @@ body {
       width: 100%;
     }
     &-date {
-      font-family: 'Inter', sans-serif;
       color: rgba(0, 0, 0, 0.5);
 
       font-size: 12px;
@@ -139,7 +160,6 @@ body {
     flex-wrap: nowrap;
   }
   &__title {
-    font-family: 'Inter', sans-serif;
     height: 28px;
     font-size: 20px;
     font-style: normal;
@@ -159,7 +179,6 @@ body {
   }
   &__descr {
     color: #000;
-    font-family: 'Inter', sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -177,7 +196,6 @@ body {
     color: rgba(0, 0, 0, 0.75);
     strong {
       color: rgba(0, 0, 0, 0.75);
-      font-family: 'Inter', sans-serif;
       font-size: 18px;
       font-style: normal;
       font-weight: 400;
@@ -189,7 +207,6 @@ body {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-family: 'Inter', sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -204,7 +221,6 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.5);
   padding: 2px 5px;
   color: rgba(0, 0, 0, 0.5);
-  font-family: 'Inter', sans-serif;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -214,7 +230,6 @@ body {
     border: 1px solid rgba(0, 0, 0, 0.5);
     padding: 2px 5px;
     color: rgba(0, 0, 0, 0.5);
-    font-family: 'Inter', sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
@@ -229,4 +244,70 @@ body {
   padding-top: 26px;
   display: flex;
   justify-content: center;
+}
+
+.form {
+  height: 100vh;
+  width: 384px;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 60px;
+  &__wrapper {
+    height: max-content;
+    background-color: #fff;
+    padding: 48px 32px;
+    border-radius: 5px;
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+  }
+  &__item {
+    width: 100%;
+    margin-bottom: 0;
+  }
+  &__button {
+    width: 100%;
+  }
+  &__header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px;
+  }
+  &__element {
+    width: 100%;
+  }
+  &__body {
+    gap: 12px;
+  }
+  &__checkbox {
+    display: flex;
+    align-items: flex-start;
+    border-top: 1px solid #e8e8e8;
+    padding-top: 8px;
+    p {
+      padding-left: 8px;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 22px;
+    }
+  }
+  &__footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
+    color: #8c8c8c;
+    gap: 8px;
+  }
 }

@@ -14,6 +14,18 @@ body {
   background-color: #ebeef3;
 }
 
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  &__item {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 .likebox {
   position: absolute;
   z-index: -1;
@@ -55,21 +67,6 @@ body {
   &__btn {
     height: 100%;
     @include headerFonts;
-    &--green {
-      border: 1px solid #52c41a;
-      color: #52c41a;
-    }
-    &--black {
-      border: 1px solid rgba(0, 0, 0, 0.75);
-      color: rgba(0, 0, 0, 0.75);
-    }
-    &--sm {
-      height: min-content;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: 22px;
-    }
   }
   &__username {
     font-size: 18px;
@@ -82,6 +79,28 @@ body {
     display: flex;
     gap: 13px;
     align-items: center;
+  }
+  &__img {
+    border-radius: 100%;
+    cursor: pointer;
+  }
+}
+.btn {
+  height: min-content;
+  &--green {
+    border: 1px solid #52c41a;
+    color: #52c41a;
+  }
+  &--black {
+    border: 1px solid rgba(0, 0, 0, 0.75);
+    color: rgba(0, 0, 0, 0.75);
+  }
+  &--sm {
+    height: min-content;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
   }
 }
 .content {
@@ -104,22 +123,30 @@ body {
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-  &__row {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
   &__author {
     display: flex;
-    width: 100%;
     justify-content: flex-end;
     align-items: flex-start;
+    width: min-content;
     gap: 12px;
+    flex-wrap: wrap;
 
     &-wrapper {
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-end;
+    }
+    &-header {
+      gap: 12px;
+      flex-wrap: nowrap;
+      text-wrap: nowrap;
+    }
+    &-btns {
+      gap: 12px;
+      flex-wrap: nowrap;
     }
     &-avatar {
       width: 46px;
@@ -146,18 +173,31 @@ body {
       height: max-content;
     }
   }
+  &__wrapper {
+    &-header {
+      width: 100%;
+      flex-wrap: nowrap;
+    }
+    &-body {
+      width: 100%;
+    }
+  }
   &__info {
     width: 100%;
     display: flex;
     gap: 4px;
     flex-wrap: wrap;
     overflow: hidden;
+    padding-right: 20px;
+    align-content: flex-start;
   }
   &__header {
     display: flex;
     align-items: center;
     gap: 13px;
     flex-wrap: nowrap;
+    width: 100%;
+    height: min-content;
   }
   &__title {
     height: 28px;
@@ -184,7 +224,8 @@ body {
     font-weight: 400;
     line-height: 22px;
     overflow: hidden;
-    height: 100%;
+    height: max-content;
+    width: 100%;
   }
   &__body {
     width: 100%;
@@ -202,6 +243,9 @@ body {
       line-height: 28px;
     }
   }
+  &__paragraph {
+    margin-bottom: 0;
+  }
 }
 .like {
   display: flex;
@@ -212,6 +256,7 @@ body {
   font-weight: 400;
   line-height: 22px;
   color: black;
+  cursor: pointer;
   &__img {
     font-size: 18px;
   }
@@ -254,6 +299,7 @@ body {
   margin-top: 60px;
   &__wrapper {
     height: max-content;
+    width: 100%;
     background-color: #fff;
     padding: 48px 32px;
     border-radius: 5px;
@@ -269,7 +315,8 @@ body {
     margin-bottom: 0;
   }
   &__button {
-    width: 100%;
+    width: 30%;
+    margin-right: auto;
   }
   &__header {
     width: 100%;
@@ -285,6 +332,9 @@ body {
   }
   &__body {
     gap: 12px;
+    &--article {
+      width: 100%;
+    }
   }
   &__checkbox {
     display: flex;
@@ -309,5 +359,28 @@ body {
     line-height: 20px;
     color: #8c8c8c;
     gap: 8px;
+  }
+  &__tags {
+    display: flex;
+    align-items: flex-end;
+    &-container {
+      display: flex;
+      flex-wrap: wrap;
+      width: min-content;
+      gap: 8px;
+    }
+  }
+  &__tag {
+    &-add {
+      width: max-content;
+    }
+    &-space {
+      margin-right: 18px;
+      width: max-content;
+    }
+  }
+  &__article {
+    padding-top: 30px;
+    width: 100%;
   }
 }

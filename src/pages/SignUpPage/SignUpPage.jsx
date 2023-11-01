@@ -2,8 +2,8 @@ import React from 'react'
 
 import Registration from '../../components/registration/registration'
 
-const RegistrationPage = () => {
+const SignUpPage = () => {
   return <Registration />
 }
 
-export default RegistrationPage
+export default SignUpPage

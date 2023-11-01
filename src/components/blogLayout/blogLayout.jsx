@@ -2,7 +2,7 @@ import { Col, Layout, Row, Space } from 'antd'
 import { Content, Header } from 'antd/es/layout/layout'
 import { Outlet } from 'react-router-dom'
 
-import BlogHeader from '../blogHeader'
+import BlogHeader from '../Header'
 
 const BlogLayout = () => {
   return (

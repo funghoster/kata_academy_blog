@@ -18,7 +18,7 @@ export const fetchRegistration = createAsyncThunk('auth/fetchRegistration', asyn
     }
   }
 })
-export const fetchLogin = createAsyncThunk('auth/fetchLogin', async function (data, { rejectWithValue }) {
+export const fetchLogin = createAsyncThunk('auth/fetchLogin', async function (data, { rejectWithValue, dispatch }) {
   try {
     const user = {
       user: {
@@ -26,7 +26,9 @@ export const fetchLogin = createAsyncThunk('auth/fetchLogin', async function (da
         password: data.password,
       },
     }
+    console.log('response data: ', user)
     const response = await axios.post('https://blog.kata.academy/api/users/login', user)
+    dispatch(login(response.data))
     return response.data
   } catch (error) {
     if (error.response) {
@@ -46,10 +48,116 @@ export const fetchGetCurrentUser = createAsyncThunk(
       if (response.status === 401) dispatch(logout())
       if (response.status === 200) dispatch(login(response.data))
       else throw Error()
+      // dispatch(login(response.data))
       return response.data
     } catch (error) {
       if (error.response) {
         return rejectWithValue(error.response.data)
+      }
+    }
+  }
+)
+export const fetchEditProfile = createAsyncThunk(
+  'auth/fetchEditProfile',
+  async function (user, { rejectWithValue, getState, dispatch }) {
+    console.log(getState().auth.token, 'getState')
+    const request = {
+      user: {
+        email: user.email,
+        username: user.username,
+        bio: null,
+        image: user.image || null,
+      },
+    }
+    const config = {
+      headers: {
+        Authorization: `Token ${getState().auth.token}`,
+        'Content-Type': 'application/json',
+      },
+    }
+    try {
+      const response = await axios.put('https://blog.kata.academy/api/user', request, config)
+      dispatch(login(response.data))
+      return response.data
+    } catch (error) {
+      if (error.response) {
+        return rejectWithValue(error.response)
+      }
+    }
+  }
+)
+
+export const fetchCreateArticle = createAsyncThunk(
+  'auth/fetchCreateArticle',
+  async function ({ article, params }, { rejectWithValue, getState }) {
+    console.log('params in editArticle', params, 'article: ', article)
+    const request = {
+      article,
+    }
+    const config = {
+      headers: {
+        Authorization: `Token ${getState().auth.token}`,
+        'Content-Type': 'application/json',
+      },
+    }
+    try {
+      let response
+      if (params.slug)
+        response = await axios.put(`https://blog.kata.academy/api/articles/${params.slug}`, request, config)
+      else response = await axios.post('https://blog.kata.academy/api/articles', request, config)
+      console.log('Создание поста', response)
+      return response.data
+    } catch (error) {
+      if (error.response) {
+        return rejectWithValue(error.response)
+      }
+    }
+  }
+)
+
+export const fetchFavoriteArticle = createAsyncThunk(
+  'auth/fetchFavoriteArticle',
+  async function ({ slug, setFavorite }, { rejectWithValue, getState }) {
+    console.log(getState().auth.token, 'getState')
+    console.log(setFavorite, 'setFavorite')
+
+    const request = {}
+    const config = {
+      headers: {
+        Authorization: `Token ${getState().auth.token}`,
+        'Content-Type': 'application/json',
+      },
+    }
+    try {
+      let response
+      if (setFavorite)
+        response = await axios.post(`https://blog.kata.academy/api/articles/${slug}/favorite`, request, config)
+      else response = await axios.delete(`https://blog.kata.academy/api/articles/${slug}/favorite`, config)
+      return response.data
+    } catch (error) {
+      if (error.response) {
+        return rejectWithValue(error.response)
+      }
+    }
+  }
+)
+export const fetchDeleteArticle = createAsyncThunk(
+  'auth/fetchDeleteArticle',
+  async function (slug, { rejectWithValue, getState }) {
+    console.log('params in editArticle', slug)
+    const config = {
+      headers: {
+        Authorization: `Token ${getState().auth.token}`,
+        'Content-Type': 'application/json',
+      },
+    }
+    try {
+      const response = await axios.delete(`https://blog.kata.academy/api/articles/${slug}`, config)
+      console.log('Удаление поста', response)
+      return response.data
+    } catch (error) {
+      if (error.response) {
+        return rejectWithValue(error.response)
       }
     }
   }
@@ -70,15 +178,19 @@ const authSlice = createSlice({
       state.errors = null
     },
     login: (state, action) => {
+      localStorage.removeItem('token')
       state.isAuthenticated = true
       state.token = action.payload.user.token
-      state.user = action.payload.user
-      console.log(action.payload)
+      state.user = { ...action.payload.user }
+      state.errors = null
+      localStorage.setItem('token', action.payload.user.token)
     },
     logout: (state) => {
       state.isAuthenticated = false
       state.token = null
       state.user = null
+      state.errors = null
+      localStorage.removeItem('token')
     },
   },
   extraReducers: (builder) => {
@@ -92,12 +204,6 @@ const authSlice = createSlice({
       state.errors = action.payload.errors
       console.log(state.errors, 'Ошибочка')
     })
-    builder.addCase(fetchLogin.fulfilled, (state, action) => {
-      state.isAuthenticated = true
-      state.token = action.payload.user.token
-      state.errors = null
-      localStorage.setItem('token', action.payload.user.token)
-    })
     builder.addCase(fetchLogin.rejected, (state, action) => {
       state.errors = action.payload.errors
       console.log(state.errors, 'Ошибочка')
@@ -105,6 +211,21 @@ const authSlice = createSlice({
     builder.addCase(fetchGetCurrentUser.rejected, (state, action) => {
       state.errors = action.payload.errors
       console.log(state.errors, 'Ошибочка')
+    })
+    builder.addCase(fetchEditProfile.fulfilled, (state, action) => {
+      state.user = action.payload.user
+    })
+    builder.addCase(fetchEditProfile.rejected, (state, action) => {
+      state.errors = action.payload.errors
+      console.log(action.payload, 'Ошибочка')
+    })
+    builder.addCase(fetchCreateArticle.rejected, (state, action) => {
+      state.errors = action.payload.errors
+      console.log(action.payload, 'Ошибочка')
+    })
+    builder.addCase(fetchDeleteArticle.rejected, (state, action) => {
+      state.errors = action.payload.errors
+      console.log(action.payload, 'Ошибочка')
     })
   },
 })

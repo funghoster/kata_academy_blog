@@ -1,22 +1,28 @@
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { clearError, fetchRegistration } from '../../stores/authSlice'
 
 const Registration = () => {
   const dispatch = useDispatch()
-  dispatch(clearError())
-  const errors = useSelector((state) => state.auth.errors)
-  const onFinish = (values) => {
-    console.log('Received values of form: ', values)
-    dispatch(fetchRegistration(values))
+  const navigate = useNavigate()
+  const { errors, isAuthenticated } = useSelector((state) => state.auth)
+  if (isAuthenticated) navigate('/articles')
+  const onFinish = async (values) => {
+    const result = await dispatch(fetchRegistration(values))
+    if (result.meta.requestStatus === 'fulfilled') navigate(-1)
   }
+
+  useEffect(() => {
+    dispatch(clearError())
+  }, [dispatch])
+
   return (
     <Row className="form">
       <Col>
-        <Form className="form__wrapper" onFinish={onFinish}>
+        <Form className="form__wrapper" onFinish={onFinish} name="sign-up">
           <Row className="form__header">Create new account</Row>
           <Row className="form__body">
             <Col className="form__element">
@@ -43,7 +49,7 @@ const Registration = () => {
                 validateStatus={errors?.username ? 'error' : ''}
                 help={errors?.username ? 'That username is already taken!' : ''}
               >
-                <Input placeholder="Username" />
+                <Input placeholder="Username" name="username" />
               </Form.Item>
             </Col>
             <Col className="form__element">
@@ -64,7 +70,7 @@ const Registration = () => {
                 validateStatus={errors?.email ? 'error' : ''}
                 help={errors?.email ? 'That email is already taken!' : ''}
               >
-                <Input placeholder="Email address" />
+                <Input placeholder="Email address" name="email" />
               </Form.Item>
             </Col>
             <Col className="form__element">
@@ -84,7 +90,7 @@ const Registration = () => {
                   },
                 ]}
               >
-                <Input.Password placeholder="Password" />
+                <Input.Password placeholder="Password" name="password" />
               </Form.Item>
             </Col>
             <Col className="form__element">
@@ -108,7 +114,7 @@ const Registration = () => {
                   }),
                 ]}
               >
-                <Input.Password placeholder="Password" />
+                <Input.Password placeholder="Password" name="confirm" />
               </Form.Item>
             </Col>
             <Col className="form__element">
@@ -130,7 +136,7 @@ const Registration = () => {
               </Form.Item>
             </Col>
           </Row>
-          <Button type="primary" htmlType="submit" className="form__button">
+          <Button type="primary" htmlType="submit" className="form__button" block>
             Create
           </Button>
           <Row className="form__footer">

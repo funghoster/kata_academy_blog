@@ -1,18 +1,23 @@
+import { Empty, Row, Typography } from 'antd'
 import React from 'react'
 import { isRouteErrorResponse, useRouteError } from 'react-router-dom'
+
+const { Title } = Typography
 
 const ErrorComponent = () => {
   const error = useRouteError()
   if (isRouteErrorResponse(error)) {
     return (
-      <div>
-        <h1>{error.status}</h1>
-        <h2>{error.data.message || 'Something goes wrong!'}</h2>
-        <h3>{error.data.reason}</h3>
-      </div>
+      <Row justify={'center'} align={'middle'} className="error">
+        <Empty className="error__item" description={<Title level={2}>Page not found</Title>} />
+      </Row>
     )
   }
-  throw error
+  return (
+    <Row justify={'center'} align={'middle'}>
+      <Empty description={<Title level={2}>Page not found</Title>} />
+    </Row>
+  )
 }
 
 export default ErrorComponent

@@ -1,4 +1,4 @@
-import { Pagination, Row, Spin } from 'antd'
+import { ConfigProvider, Pagination, Row, Spin } from 'antd'
 import React, { Suspense } from 'react'
 import { Await, defer, json, useAsyncValue, useLoaderData, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
@@ -43,13 +43,27 @@ const PaginationPosts = ({ navigate, params }) => {
     params.page = Number(params.page) || 1
   }
   return (
-    <Pagination
-      showSizeChanger={false}
-      defaultCurrent={params.page}
-      pageSize={5}
-      total={posts.articlesCount}
-      onChange={(page) => navigate(`/${page}`)}
-    />
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#ffffff',
+          fontWeightStrong: 400,
+        },
+        components: {
+          Pagination: {
+            itemActiveBg: '#1890FF',
+          },
+        },
+      }}
+    >
+      <Pagination
+        showSizeChanger={false}
+        defaultCurrent={params.page}
+        pageSize={5}
+        total={posts.articlesCount}
+        onChange={(page) => navigate(`/${page}`)}
+      />
+    </ConfigProvider>
   )
 }
 

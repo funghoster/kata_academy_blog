@@ -1,18 +1,20 @@
 import { Button, Checkbox, Col, Form, Input, Row } from 'antd'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { clearError, fetchRegistration } from '../../stores/authSlice'
 
 const Registration = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { errors, isAuthenticated } = useSelector((state) => state.auth)
-  if (isAuthenticated) navigate('/articles')
+  const location = useLocation()
+  const { errors } = useSelector((state) => state.auth)
+  const redirectPath = location.state?.path || '/'
+
   const onFinish = async (values) => {
     const result = await dispatch(fetchRegistration(values))
-    if (result.meta.requestStatus === 'fulfilled') navigate(-1)
+    if (result.meta.requestStatus === 'fulfilled') navigate(redirectPath)
   }
 
   useEffect(() => {
@@ -141,7 +143,7 @@ const Registration = () => {
           </Button>
           <Row className="form__footer">
             <span>
-              Already have an account?<Link to="/sign-in">&nbsp;Sign In.</Link>
+              Already have an account?<Link to="sign-in">&nbsp;Sign In.</Link>
             </span>
           </Row>
         </Form>

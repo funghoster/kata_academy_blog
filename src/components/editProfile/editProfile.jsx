@@ -8,14 +8,14 @@ import { fetchEditProfile } from '../../stores/authSlice'
 const EditProfile = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
   const state = useSelector((state) => state.auth)
   const { errors, user } = state
-  console.log(user, 'EditProfile/user')
+
   const onFinish = async (values) => {
     const result = await dispatch(fetchEditProfile(values))
     if (result.meta.requestStatus === 'fulfilled') navigate(-1)
   }
+
   if (!user) {
     return (
       <Row className="form">
@@ -23,6 +23,7 @@ const EditProfile = () => {
       </Row>
     )
   }
+
   return (
     <Row className="form">
       <Col>

@@ -22,10 +22,6 @@ const ArticleCard = ({ post }) => {
   const thisAuthor = username === user?.username
   const hasParams = params.slug
 
-  console.log('params of card', params.slug)
-  console.log('Данные для заполнения карточки', post)
-  console.log('favorited', favorited)
-
   const tags = tagList.map((tag, index) => (
     <Col key={index} className="tag">
       {tag}
@@ -53,7 +49,6 @@ const ArticleCard = ({ post }) => {
 
   const onLike = async (slug, setFavorite) => {
     const result = await dispatch(fetchFavoriteArticle({ slug, setFavorite }))
-    console.log(result)
     if (result.meta.requestStatus === 'fulfilled') {
       setFavorited(result.payload.article.favorited)
       setCount(result.payload.article.favoritesCount)

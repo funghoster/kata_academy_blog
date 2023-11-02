@@ -1,6 +1,6 @@
 import { Pagination, Row, Spin } from 'antd'
 import React, { Suspense } from 'react'
-import { Await, defer, useAsyncValue, useLoaderData, useNavigate, useParams } from 'react-router-dom'
+import { Await, defer, json, useAsyncValue, useLoaderData, useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 
 import './articleList.scss'
@@ -55,7 +55,6 @@ const PaginationPosts = ({ navigate, params }) => {
 
 async function getPosts(page = 1) {
   const offset = page * 5 - 5
-  console.log('localStorage.key(token)', localStorage.getItem('token'))
   const config = {
     headers: localStorage.getItem('token') ? { Authorization: `Token ${localStorage.getItem('token')}` } : null,
     'Content-Type': 'application/json',
@@ -64,13 +63,23 @@ async function getPosts(page = 1) {
     const response = await axios.get(`https://blog.kata.academy/api/articles?limit=5&offset=${offset}`, config)
     return response.data
   } catch (error) {
-    throw new Response('', { status: error, statusText: 'Not found!!!' })
+    throw json(
+      {
+        statusText: 'Not found!!!',
+      },
+      { status: error }
+    )
   }
 }
 
 const blogLoader = async ({ params: { page = 1 } }) => {
-  console.log(page)
-  if (isNaN(Number(page))) throw new Response('', { status: 404, statusText: `Page '/${page}' Not found!!!` })
+  if (isNaN(Number(page)))
+    throw json(
+      {
+        statusText: `Page '/${page}' Not found!!!`,
+      },
+      { status: 404 }
+    )
 
   return defer({
     posts: getPosts(page),

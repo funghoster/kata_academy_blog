@@ -1,3 +1,3 @@
-import Post from './articlePage'
+import ArticlePage from './articlePage'
 
-export default Post
+export default ArticlePage

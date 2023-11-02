@@ -9,13 +9,13 @@ const ErrorComponent = () => {
   if (isRouteErrorResponse(error)) {
     return (
       <Row justify={'center'} align={'middle'} className="error">
-        <Empty className="error__item" description={<Title level={2}>Page not found</Title>} />
+        <Empty className="error__item" description={<Title level={2}>{error.statusText}</Title>} />
       </Row>
     )
   }
   return (
     <Row justify={'center'} align={'middle'}>
-      <Empty description={<Title level={2}>Page not found</Title>} />
+      <Empty description={<Title level={2}>{error.statusText}</Title>} />
     </Row>
   )
 }

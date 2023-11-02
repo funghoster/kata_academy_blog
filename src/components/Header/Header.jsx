@@ -11,7 +11,6 @@ const Header = () => {
   const navigate = useNavigate()
   const data = useSelector((state) => state.auth)
   const imageSrc = data?.user?.image
-  console.log(data)
   let elements
   if (data.isAuthenticated) {
     elements = (

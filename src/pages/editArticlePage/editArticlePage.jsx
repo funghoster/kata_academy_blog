@@ -1,5 +1,5 @@
 import React from 'react'
-import { Await, defer, useLoaderData } from 'react-router-dom'
+import { Await, defer, json, useLoaderData } from 'react-router-dom'
 
 import ArticleComponent from '../../components/articleComponent'
 
@@ -11,7 +11,12 @@ const EditArticlePage = () => {
 async function getArticleData(slug) {
   const res = await fetch(`https://blog.kata.academy/api/articles/${slug}`)
   if (!res.ok) {
-    throw new Response('', { status: res.status, statusText: 'Not found!!!' })
+    throw json(
+      {
+        statusText: 'Not found!!!',
+      },
+      { status: res.status }
+    )
   }
 
   return res.json()

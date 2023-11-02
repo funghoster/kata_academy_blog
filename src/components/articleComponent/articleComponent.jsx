@@ -12,15 +12,12 @@ const ArticleComponent = ({ article = {} }) => {
   const navigate = useNavigate()
   const [load, setLoad] = useState(false)
   const hasParams = params.slug || false
-  console.log(article)
-
-  console.log('params for edit article', params, 'has params', hasParams)
 
   const onFinish = async (article) => {
     setLoad(true)
     const result = await dispatch(fetchCreateArticle({ article, params }))
     if (result) setLoad(false)
-    if (result.meta.requestStatus === 'fulfilled') navigate(hasParams ? `/articles/${hasParams}` : '/')
+    if (result.meta.requestStatus === 'fulfilled') navigate(`/articles/${result.payload.article.slug}`)
   }
 
   return (
